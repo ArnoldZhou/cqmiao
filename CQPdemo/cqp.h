@@ -17,23 +17,23 @@
 
 typedef int32_t CQBOOL;
 
-#define EVENT_IGNORE 0        //ÊÂ¼ş_À¹½Ø
-#define EVENT_BLOCK 1         //ÊÂ¼ş_ºöÂÔ
+#define EVENT_IGNORE 0        //äº‹ä»¶_å¿½ç•¥
+#define EVENT_BLOCK 1         //äº‹ä»¶_æ‹¦æˆª
 
-#define REQUEST_ALLOW 1       //ÇëÇó_Í¨¹ı
-#define REQUEST_DENY 0        //ÇëÇó_¾Ü¾ø
+#define REQUEST_ALLOW 1       //è¯·æ±‚_é€šè¿‡
+#define REQUEST_DENY 0        //è¯·æ±‚_æ‹’ç»
 
-#define REQUEST_GROUPADD 1    //ÇëÇó_ÈºÌí¼Ó
-#define REQUEST_GROUPINVITE 2 //ÇëÇó_ÈºÑûÇë
+#define REQUEST_GROUPADD 1    //è¯·æ±‚_ç¾¤æ·»åŠ 
+#define REQUEST_GROUPINVITE 2 //è¯·æ±‚_ç¾¤é‚€è¯·
 
-#define CQLOG_DEBUG 0           //µ÷ÊÔ »ÒÉ«
-#define CQLOG_INFO 10           //ĞÅÏ¢ ºÚÉ«
-#define CQLOG_INFOSUCCESS 11    //ĞÅÏ¢(³É¹¦) ×ÏÉ«
-#define CQLOG_INFORECV 12       //ĞÅÏ¢(½ÓÊÕ) À¶É«
-#define CQLOG_INFOSEND 13       //ĞÅÏ¢(·¢ËÍ) ÂÌÉ«
-#define CQLOG_WARNING 20        //¾¯¸æ ³ÈÉ«
-#define CQLOG_ERROR 30          //´íÎó ºìÉ«
-#define CQLOG_FATAL 40          //ÖÂÃü´íÎó Éîºì
+#define CQLOG_DEBUG 0           //è°ƒè¯• ç°è‰²
+#define CQLOG_INFO 10           //ä¿¡æ¯ é»‘è‰²
+#define CQLOG_INFOSUCCESS 11    //ä¿¡æ¯(æˆåŠŸ) ç´«è‰²
+#define CQLOG_INFORECV 12       //ä¿¡æ¯(æ¥æ”¶) è“è‰²
+#define CQLOG_INFOSEND 13       //ä¿¡æ¯(å‘é€) ç»¿è‰²
+#define CQLOG_WARNING 20        //è­¦å‘Š æ©™è‰²
+#define CQLOG_ERROR 30          //é”™è¯¯ çº¢è‰²
+#define CQLOG_FATAL 40          //è‡´å‘½é”™è¯¯ æ·±çº¢
 
 
 CQAPI(int32_t) CQ_sendPrivateMsg(int32_t AuthCode, int64_t QQID, const char *msg);
