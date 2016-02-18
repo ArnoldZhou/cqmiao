@@ -21,7 +21,7 @@ typedef int32_t CQBOOL;
 #define EVENT_BLOCK 1         //事件_拦截
 
 #define REQUEST_ALLOW 1       //请求_通过
-#define REQUEST_DENY 0        //请求_拒绝
+#define REQUEST_DENY 2        //请求_拒绝
 
 #define REQUEST_GROUPADD 1    //请求_群添加
 #define REQUEST_GROUPINVITE 2 //请求_群邀请
