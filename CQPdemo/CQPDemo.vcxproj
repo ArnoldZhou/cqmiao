@@ -14,7 +14,7 @@
     <ProjectGuid>{9D36EAFF-6BF0-4BDE-A20C-5BCB92DE79D6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CQPSDK</RootNamespace>
-    <ProjectName>com.coxxs.democ</ProjectName>
+    <ProjectName>com.example.democ</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -97,7 +97,7 @@
     <Library Include="CQP.lib" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="com.coxxs.democ.json" />
+    <None Include="com.example.democ.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
