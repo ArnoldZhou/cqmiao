@@ -1,6 +1,6 @@
 // 酷Q 的Json文件支持以 // 开头的注释。
 // 打包前，应用的 .dll, .json 的文件名须以appid命名，应用AppInfo返回的内容须改为appid
-// 如 appid=com.example.demo, 则dll及json文件需分别命名为 com.example.demo.dll、com.example.demo.json
+// 如 appid=com.example.democ, 则dll及json文件需分别命名为 com.example.democ.dll、com.example.democ.json
 {
     "ret":1,					// 返回码，固定为1
     "apiver":9,					// Api版本，本SDK为9
