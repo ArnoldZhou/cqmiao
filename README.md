@@ -18,4 +18,4 @@
 --------
 主站：https://cqp.cc
 
-文库：https://d.cqp.cc
+文库：https://d.cqp.me
