@@ -9,13 +9,13 @@
 #define CQAPIVERTEXT "9"
 
 #ifndef CQAPI
-#define CQAPI(ReturnType) extern "C" __declspec(dllimport) ReturnType __stdcall
+#define CQAPI(RETN_TYPE) extern "C" __declspec(dllimport) RETN_TYPE __stdcall
 #endif
 
-#define CQEVENT(ReturnType, Name, Size) __pragma(comment(linker, "/EXPORT:" #Name "=_" #Name "@" #Size))\
- extern "C" __declspec(dllexport) ReturnType __stdcall Name
+#define CQEVENT(RETN_TYPE, FUNC_NAME, HEAD_SIZE) __pragma(comment(linker, "/EXPORT:" #FUNC_NAME "=_" #FUNC_NAME "@" #HEAD_SIZE ))\
+ extern "C" RETN_TYPE __stdcall FUNC_NAME
 
-typedef int32_t CQBOOL;
+typedef BOOL CQBOOL;
 
 #define EVENT_IGNORE 0        //ÊÂ¼þ_ºöÂÔ
 #define EVENT_BLOCK 1         //ÊÂ¼þ_À¹½Ø
@@ -35,29 +35,28 @@ typedef int32_t CQBOOL;
 #define CQLOG_ERROR 30          //´íÎó ºìÉ«
 #define CQLOG_FATAL 40          //ÖÂÃü´íÎó Éîºì
 
-
-CQAPI(int32_t) CQ_sendPrivateMsg(int32_t AuthCode, int64_t QQID, const char *msg);
-CQAPI(int32_t) CQ_sendGroupMsg(int32_t AuthCode, int64_t groupid, const char *msg);
-CQAPI(int32_t) CQ_sendDiscussMsg(int32_t AuthCode, int64_t discussid, const char *msg);
-CQAPI(int32_t) CQ_sendLike(int32_t AuthCode, int64_t QQID);
-CQAPI(int32_t) CQ_setGroupKick(int32_t AuthCode, int64_t groupid, int64_t QQID, CQBOOL rejectaddrequest);
-CQAPI(int32_t) CQ_setGroupBan(int32_t AuthCode, int64_t groupid, int64_t QQID, int64_t duration);
-CQAPI(int32_t) CQ_setGroupAdmin(int32_t AuthCode, int64_t groupid, int64_t QQID, CQBOOL setadmin);
-CQAPI(int32_t) CQ_setGroupWholeBan(int32_t AuthCode, int64_t groupid, CQBOOL enableban);
-CQAPI(int32_t) CQ_setGroupAnonymousBan(int32_t AuthCode, int64_t groupid, const char *anomymous, int64_t duration);
-CQAPI(int32_t) CQ_setGroupAnonymous(int32_t AuthCode, int64_t groupid, CQBOOL enableanomymous);
-CQAPI(int32_t) CQ_setGroupCard(int32_t AuthCode, int64_t groupid, int64_t QQID, const char *newcard);
-CQAPI(int32_t) CQ_setGroupLeave(int32_t AuthCode, int64_t groupid, CQBOOL isdismiss);
-CQAPI(int32_t) CQ_setGroupSpecialTitle(int32_t AuthCode, int64_t groupid, int64_t QQID, const char *newspecialtitle, int64_t duration);
-CQAPI(int32_t) CQ_setDiscussLeave(int32_t AuthCode, int64_t discussid);
-CQAPI(int32_t) CQ_setFriendAddRequest(int32_t AuthCode, const char *responseflag, int32_t responseoperation, const char *remark);
-CQAPI(int32_t) CQ_setGroupAddRequestV2(int32_t AuthCode, const char *responseflag, int32_t requesttype, int32_t responseoperation, const char *reason);
-CQAPI(const char *) CQ_getGroupMemberInfoV2(int32_t AuthCode, int64_t groupid, int64_t QQID, CQBOOL nocache);
-CQAPI(const char *) CQ_getStrangerInfo(int32_t AuthCode, int64_t QQID, CQBOOL nocache);
-CQAPI(int32_t) CQ_addLog(int32_t AuthCode, int32_t priority, const char *category, const char *content);
-CQAPI(const char *) CQ_getCookies(int32_t AuthCode);
-CQAPI(int32_t) CQ_getCsrfToken(int32_t AuthCode);
-CQAPI(int64_t) CQ_getLoginQQ(int32_t AuthCode);
-CQAPI(const char *) CQ_getLoginNick(int32_t AuthCode);
-CQAPI(const char *) CQ_getAppDirectory(int32_t AuthCode);
-CQAPI(int32_t) CQ_setFatal(int32_t AuthCode, const char *errorinfo);
+CQAPI(INT32) CQ_sendPrivateMsg(INT32 AuthCode, INT64 QQID, LPCSTR msg);
+CQAPI(INT32) CQ_sendGroupMsg(INT32 AuthCode, INT64 groupid, LPCSTR msg);
+CQAPI(INT32) CQ_sendDiscussMsg(INT32 AuthCode, INT64 discussid, LPCSTR msg);
+CQAPI(INT32) CQ_sendLike(INT32 AuthCode, INT64 QQID);
+CQAPI(INT32) CQ_setGroupKick(INT32 AuthCode, INT64 groupid, INT64 QQID, CQBOOL rejectaddrequest);
+CQAPI(INT32) CQ_setGroupBan(INT32 AuthCode, INT64 groupid, INT64 QQID, INT64 duration);
+CQAPI(INT32) CQ_setGroupAdmin(INT32 AuthCode, INT64 groupid, INT64 QQID, CQBOOL setadmin);
+CQAPI(INT32) CQ_setGroupWholeBan(INT32 AuthCode, INT64 groupid, CQBOOL enableban);
+CQAPI(INT32) CQ_setGroupAnonymousBan(INT32 AuthCode, INT64 groupid, LPCSTR anomymous, INT64 duration);
+CQAPI(INT32) CQ_setGroupAnonymous(INT32 AuthCode, INT64 groupid, CQBOOL enableanomymous);
+CQAPI(INT32) CQ_setGroupCard(INT32 AuthCode, INT64 groupid, INT64 QQID, LPCSTR newcard);
+CQAPI(INT32) CQ_setGroupLeave(INT32 AuthCode, INT64 groupid, CQBOOL isdismiss);
+CQAPI(INT32) CQ_setGroupSpecialTitle(INT32 AuthCode, INT64 groupid, INT64 QQID, LPCSTR newspecialtitle, INT64 duration);
+CQAPI(INT32) CQ_setDiscussLeave(INT32 AuthCode, INT64 discussid);
+CQAPI(INT32) CQ_setFriendAddRequest(INT32 AuthCode, LPCSTR responseflag, INT32 responseoperation, LPCSTR remark);
+CQAPI(INT32) CQ_setGroupAddRequestV2(INT32 AuthCode, LPCSTR responseflag, INT32 requesttype, INT32 responseoperation, LPCSTR reason);
+CQAPI(LPCSTR) CQ_getGroupMemberInfoV2(INT32 AuthCode, INT64 groupid, INT64 QQID, CQBOOL nocache);
+CQAPI(LPCSTR) CQ_getStrangerInfo(INT32 AuthCode, INT64 QQID, CQBOOL nocache);
+CQAPI(INT32) CQ_addLog(INT32 AuthCode, INT32 priority, LPCSTR category, LPCSTR content);
+CQAPI(LPCSTR) CQ_getCookies(INT32 AuthCode);
+CQAPI(INT32) CQ_getCsrfToken(INT32 AuthCode);
+CQAPI(INT64) CQ_getLoginQQ(INT32 AuthCode);
+CQAPI(LPCSTR) CQ_getLoginNick(INT32 AuthCode);
+CQAPI(LPCSTR) CQ_getAppDirectory(INT32 AuthCode);
+CQAPI(INT32) CQ_setFatal(INT32 AuthCode, LPCSTR errorinfo);
