@@ -1,5 +1,5 @@
-os: Visual Studio 2010
+image:
+  - Visual Studio 2015
 
 build_script:
   - msbuild.exe CQPdemo.sln /t:Build /p:Configuration=Release;Platform=Win32
-  
