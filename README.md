@@ -1,6 +1,5 @@
-简介
-----
-使用 Visual C++ 编写 酷Q 应用。
+# cqsdk-vc [![Build status](https://ci.appveyor.com/api/projects/status/b45ik9dass1rnrnj?svg=true)](https://ci.appveyor.com/project/Coxxs/cqsdk-vc)
+使用 Visual C++ 编写 酷Q V9 应用。
 
 文件说明
 --------
