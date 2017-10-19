@@ -173,7 +173,7 @@ CQAPI(const char *) CQ_getStrangerInfo(int32_t AuthCode, int64_t QQID, CQBOOL no
 
 /*
 * 日志
-* priority 优先级
+* priority 优先级，CQLOG 开头的常量
 * category 类型
 * content 内容
 */
