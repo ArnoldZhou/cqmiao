@@ -63,7 +63,6 @@ CQAPI(int32_t) CQ_sendDiscussMsg(int32_t AuthCode, int64_t discussid, const char
 */
 CQAPI(int32_t) CQ_deleteMsg(int32_t AuthCode, int64_t msgid);
 
-
 /*
 * 发送赞 发送手机赞
 * QQID QQ号
