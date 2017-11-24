@@ -37,25 +37,32 @@ typedef int32_t CQBOOL;
 
 
 /*
-* 发送私聊消息
+* 发送私聊消息, 成功返回消息ID
 * QQID 目标QQ号
 * msg 消息内容
 */
 CQAPI(int32_t) CQ_sendPrivateMsg(int32_t AuthCode, int64_t QQID, const char *msg);
 
 /*
-* 发送群消息
+* 发送群消息, 成功返回消息ID
 * groupid 群号
 * msg 消息内容
 */
 CQAPI(int32_t) CQ_sendGroupMsg(int32_t AuthCode, int64_t groupid, const char *msg);
 
 /*
-* 发送讨论组消息
+* 发送讨论组消息, 成功返回消息ID
 * discussid 讨论组号
 * msg 消息内容
 */
 CQAPI(int32_t) CQ_sendDiscussMsg(int32_t AuthCode, int64_t discussid, const char *msg);
+
+/*
+* 撤回消息
+* msgid 消息ID
+*/
+CQAPI(int32_t) CQ_deleteMsg(int32_t AuthCode, int64_t msgid);
+
 
 /*
 * 发送赞 发送手机赞
