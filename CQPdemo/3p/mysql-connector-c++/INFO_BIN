@@ -1,0 +1,10 @@
+MySQL Connector/C++ Build Information
+
+build-date           :  2019-06-25
+os-info              :  Windows-10.0.14393
+compiler             :  MSVC 19.0.24218.1
+protobuf-version     :  3.6.1
+build-type           :  RelWithDebInfo
+ssl-library          :  OpenSSL 1.0.2s
+mysql-version        :  8.0.17
+

@@ -9,6 +9,8 @@
 #include "cqp.h"
 #include "appmain.h" //应用AppID等信息，请正确填写，否则酷Q可能无法加载
 
+#include "QQGroupMsgHandler.h"
+
 using namespace std;
 
 int ac = -1; //AuthCode 调用酷Q的方法时需要用到
@@ -94,7 +96,9 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t msgId, int64_t 
 * Type=2 群消息
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t msgId, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
-
+	
+	CQQGroupMsgHandler handler(fromGroup, fromQQ, fromAnonymous, msg);
+	handler.HandleGroupMsg();
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
 }
 
@@ -158,7 +162,7 @@ CQEVENT(int32_t, __eventFriend_Add, 16)(int32_t subType, int32_t sendTime, int64
 */
 CQEVENT(int32_t, __eventRequest_AddFriend, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, const char *responseFlag) {
 
-	//CQ_setFriendAddRequest(ac, responseFlag, REQUEST_ALLOW, "");
+	CQ_setFriendAddRequest(ac, responseFlag, REQUEST_DENY, "");
 
 	return EVENT_IGNORE; //关于返回值说明, 见“_eventPrivateMsg”函数
 }
