@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "QQGroupMsgHandler.h"
+#include "HyConfig.h"
 
 #include <algorithm>
 #include <execution>
@@ -35,7 +36,7 @@ void CQQGroupMsgHandler::HandleGroupMsg() noexcept
 	try
 	{
 		m_sharedAccountDataByQQ = HyDatabase().QueryUserAccountDataByQQIDDeferred(fromQQ);
-		std::for_each(std::execution::par, std::begin(CQQGroupMsgHandler::handlers), std::end(CQQGroupMsgHandler::handlers), [this](auto pmf) { (this->*pmf)(); });
+		std::for_each(HyExecution, std::begin(CQQGroupMsgHandler::handlers), std::end(CQQGroupMsgHandler::handlers), [this](auto pmf) { (this->*pmf)(); });
 
 	}
 	catch (const std::exception &e)
@@ -71,7 +72,7 @@ void CQQGroupMsgHandler::ParseServerQueryMessage() noexcept
 
 			constexpr auto servers_count = std::extent<decltype(serverlist)>::value;
 			std::array<std::shared_future<TSourceEngineQuery::ServerInfoQueryResult>, servers_count> sf_list;
-			std::transform(std::execution::par, std::begin(serverlist), std::end(serverlist), sf_list.begin(), query_fn);
+			std::transform(HyExecution, std::begin(serverlist), std::end(serverlist), sf_list.begin(), query_fn);
 			const auto abandon_time = std::chrono::system_clock::now() + 1s;
 			std::ostringstream oss;
 			for (size_t i = 0; i < servers_count; ++i)

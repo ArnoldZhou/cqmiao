@@ -1,9 +1,11 @@
 #include "HyDatabase.h"
 #include "MySqlConnectionPool.h"
+#include "HyConfig.h"
 
 #include <mysql/jdbc.h>
 
 #include <execution>
+#include <random>
 
 struct CHyDatabase::impl_t
 {
@@ -148,9 +150,8 @@ std::pair<HyUserSignResultType, std::optional<HyUserSignResult>> CHyDatabase::Do
 	++signcount;
 
 	// 填充签到奖励表
-
-	auto f = [conn = pimpl->pool.acquire(), &user, signcount]() -> HyUserSignGetItemInfo {
-		// 随机选择签到奖励
+	std::vector<std::pair<HyItemInfo, int32_t>> awards;
+	{
 		auto res = conn->Query("SELECT "
 			"amx.itemaward.`code` AS icode, "
 			"amx.iteminfo.`name` AS iname, "
@@ -158,17 +159,30 @@ std::pair<HyUserSignResultType, std::optional<HyUserSignResult>> CHyDatabase::Do
 			"amx.iteminfo.`quantifier` AS iquantifier, "
 			"amx.itemaward.`amount` AS iamount "
 			"FROM amx.itemaward, amx.iteminfo "
-			"WHERE amx.itemaward.`code` = amx.iteminfo.`code` AND '" + std::to_string(signcount) + "' BETWEEN `minfrags` AND `maxfrags` ORDER BY RAND() ASC LIMIT 1");
-		if (!res->next())
-			return {};
+			"WHERE amx.itemaward.`code` = amx.iteminfo.`code` AND '" + std::to_string(signcount) + "' BETWEEN `minfrags` AND `maxfrags`");
 
-		HyItemInfo item{
+		while (res->next())
+		{
+			HyItemInfo item{
 				res->getString("icode"),
 				res->getString("iname"),
 				res->getString("idesc"),
 				res->getString("iquantifier"),
-		};
-		auto add_amount = res->getInt("iamount");
+			};
+			auto add_amount = res->getInt("iamount");
+
+			awards.emplace_back(std::move(item), add_amount);
+		}
+	}
+	
+	auto f = [&awards, &user, conn = pimpl->pool.acquire()]() -> HyUserSignGetItemInfo {
+		// 随机选择签到奖励
+		std::random_device rd;
+		std::uniform_int_distribution<std::size_t> rg(0, awards.size() - 1);
+
+		auto &reward = awards[rg(rd)];
+		auto &item = reward.first;
+		auto add_amount = reward.second;
 
 		// 查询已有数量
 		auto cur_amount = 0;
@@ -186,22 +200,16 @@ std::pair<HyUserSignResultType, std::optional<HyUserSignResult>> CHyDatabase::Do
 			}
 		}
 		cur_amount += add_amount;
-		
-		// 返回
-		return HyUserSignGetItemInfo{
-			std::move(item),
-			add_amount,
-			cur_amount
-		};
+		return HyUserSignGetItemInfo{ item, add_amount, cur_amount };
 	};
 	std::vector<HyUserSignGetItemInfo> vecItems(rewardmultiply);
-	std::generate(std::execution::par, vecItems.begin(), vecItems.end(), f);
+	std::generate(HyExecution, vecItems.begin(), vecItems.end(), f);
 
 	// 设置新奖励
 	auto f2 = [conn = pimpl->pool.acquire(), &user](const HyUserSignGetItemInfo &info) {
 		conn->Update("UPDATE itemown SET `amount`=`amount`+'" + std::to_string(info.add_amount) + "' WHERE `auth` ='" + user.auth + "' AND `code` = '" + info.item.code + "'");
 	};
-	std::for_each(std::execution::par, vecItems.begin(), vecItems.end(), f2);
+	std::for_each(HyExecution, vecItems.begin(), vecItems.end(), f2);
 
 	return { HyUserSignResultType::success, HyUserSignResult{ rank, signcount, rewardmultiply, std::move(vecItems)} };
 }

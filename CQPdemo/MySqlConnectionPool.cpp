@@ -1,5 +1,6 @@
 #include "MySqlConnectionPool.h"
 #include "DatabaseConfig.h"
+#include "HyConfig.h"
 
 #include <mutex>
 
@@ -47,7 +48,7 @@ std::shared_ptr<MySqlConnectionUniqueAccessor> MySqlConnectionPool::acquire()
 	std::shared_ptr<MySqlConnectionUniqueAccessor> ret = nullptr;
 	while (ret == nullptr)
 	{
-		if (auto iter = std::find_if(v.cbegin(), v.cend(), [](const std::shared_ptr<MySqlConnection> &p) { return p->accessor.lock() == nullptr; }); iter != v.cend())
+		if (auto iter = std::find_if(HyExecution, v.cbegin(), v.cend(), [](const std::shared_ptr<MySqlConnection> &p) { return p->accessor.lock() == nullptr; }); iter != v.cend())
 		{
 			// 有可用连接，设置后返回。
 			ret = std::make_shared<MySqlConnectionUniqueAccessor>(*iter);

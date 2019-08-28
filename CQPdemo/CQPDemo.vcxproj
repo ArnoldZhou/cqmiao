@@ -86,6 +86,7 @@
     <ClInclude Include="cqp.h" />
     <ClInclude Include="DatabaseConfig.h" />
     <ClInclude Include="Encode.h" />
+    <ClInclude Include="HyConfig.h" />
     <ClInclude Include="HyDatabase.h" />
     <ClInclude Include="MySqlConnectionPool.h" />
     <ClInclude Include="parsemsg.h" />

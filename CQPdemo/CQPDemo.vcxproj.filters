@@ -48,6 +48,9 @@
     <ClInclude Include="MySqlConnectionPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HyConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
