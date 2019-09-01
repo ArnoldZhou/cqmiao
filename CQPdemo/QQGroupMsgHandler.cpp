@@ -319,15 +319,22 @@ std::string CQQGroupMsgHandler::QueryServerInfo(const char * host, const char * 
 
 		if (finfo.wait_for(1000ms) == std::future_status::ready)
 		{
-			auto playerlist = std::get<1>(fplayer.get().Results);
-			for (const auto &player : playerlist)
+			try
 			{
-				myReply += player.Name;
-				myReply += " [";
-				myReply += std::to_string(player.Score) + "·Ö";
-				//int duration = static_cast<int>(player.Duration);
-				//myReply += std::to_string(duration / 60) + ":" + std::to_string(duration % 60);
-				myReply += "] / ";
+				auto playerlist = std::get<1>(fplayer.get().Results);
+				for (const auto &player : playerlist)
+				{
+					myReply += player.Name;
+					myReply += " [";
+					myReply += std::to_string(player.Score) + "·Ö";
+					//int duration = static_cast<int>(player.Duration);
+					//myReply += std::to_string(duration / 60) + ":" + std::to_string(duration % 60);
+					myReply += "] / ";
+				}
+			}
+			catch (const std::exception &)
+			{
+				// ...
 			}
 		}
 

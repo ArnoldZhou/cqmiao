@@ -165,9 +165,15 @@ auto ReceiveServerQueryResultAsync(std::shared_ptr<udp::socket> spSocket, std::f
 auto TSourceEngineQuery::GetServerInfoDataAsync(const char *host, const char *port) -> std::shared_future<ServerInfoQueryResult>
 {
 	// 发送查询包
-	constexpr char request[] = "\xFF\xFF\xFF\xFF" "TSource Engine Query";
+	constexpr char request1[] = "\xFF\xFF\xFF\xFF" "TSource Engine Query"; // Source / GoldSrc Steam
+	//constexpr char request2[] = "\xFF\xFF\xFF\xFF" "details"; // GoldSrc WON
+	//constexpr char request3[] = "\xFF\xFF\xFF\xFF" "info"; // Xash3D
 	for (auto endpoint : udp::resolver(pimpl->io_context).resolve(udp::v4(), host, port))
-		pimpl->socket_info.send_to(asio::buffer(request, sizeof(request)), endpoint);
+	{
+		pimpl->socket_info.send_to(asio::buffer(request1, sizeof(request1)), endpoint);
+		//pimpl->socket_info.send_to(asio::buffer(request2, sizeof(request2)), endpoint);
+		//pimpl->socket_info.send_to(asio::buffer(request3, sizeof(request3)), endpoint);
+	}
 
 	return ReceiveServerQueryResultAsync<ServerInfoQueryResult>(std::shared_ptr<udp::socket>(pimpl, &pimpl->socket_info), MakeServerInfoQueryResultFromBuffer);
 }
@@ -186,7 +192,7 @@ auto TSourceEngineQuery::GetPlayerListDataAsync(const char *host, const char *po
 	std::shared_future<PlayerListQueryResult> result = ReceiveServerQueryResultAsync<PlayerListQueryResult>(std::shared_ptr<udp::socket>(pimpl, &pimpl->socket_player), MakePlayerListQueryResultFromBuffer);
 	
 	if (result.wait_for(500ms) != std::future_status::ready)
-		throw std::runtime_error("服务器未响应，未接收到challenge number。");
+		return std::async([]() -> PlayerListQueryResult { throw std::runtime_error("服务器未响应，未接收到challenge number。"); });
 
 	// 再次发送查询
 	auto &&await_result = result.get();

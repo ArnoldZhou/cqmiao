@@ -108,13 +108,9 @@ std::pair<HyUserSignResultType, std::optional<HyUserSignResult>> CHyDatabase::Do
 			}
 
 			if (signdelta == 1)
-				signcount = res->getInt64(2);
-			else
-				signcount = 0;
+				signcount = res->getInt(2);
 
 			conn->Update("UPDATE event SET `signdate`=NOW(), `signcount`='" + std::to_string(signcount) + "' WHERE `auth`='" + user.auth + "';");
-
-
 		}
 		else
 		{
